@@ -1,45 +1,28 @@
-/* SPDX-FileCopyrightText: 2014-present Kriasoft */
-/* SPDX-License-Identifier: MIT */
-
-import { Api, GitHub } from "@mui/icons-material";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { usePageEffect } from "../../core/page.js";
+import FileTree from './components/FileTree.js';
+import UploadErrors from "./components/UploadErrors.js";
+import UploadFileButton from "./components/UploadFileButton.js";
+import UploadErrorContextProvider from "./context/UploadErrorProvider.js";
+import ZipFileListProvider from "./context/ZipFileListProvider.js";
 
 export default function Home(): JSX.Element {
-  usePageEffect({ title: "React App" });
+  usePageEffect({ title: "Game files Dashboard" });
 
   return (
-    <Container sx={{ py: "20vh" }} maxWidth="sm">
-      <Typography sx={{ mb: 2 }} variant="h1" align="center">
-        Welcome to React Starter Kit!
-      </Typography>
+    <ZipFileListProvider>
+      <UploadErrorContextProvider>
+        <Container sx={{ py: "20vh" }} maxWidth="sm">
+          <Typography sx={{ mb: 2 }} variant="h1" align="center">
+            Zip files
+          </Typography>
 
-      <Typography sx={{ mb: 4 }} variant="h3" align="center">
-        The web&apos;s most popular Jamstack React template.
-      </Typography>
+          <UploadFileButton />
+          <UploadErrors />
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          gridGap: "1rem",
-        }}
-      >
-        <Button
-          variant="outlined"
-          size="large"
-          href={`/api`}
-          children="Explorer API"
-          startIcon={<Api />}
-        />
-        <Button
-          variant="outlined"
-          size="large"
-          href="https://github.com/kriasoft/react-starter-kit"
-          children="View on GitHub"
-          startIcon={<GitHub />}
-        />
-      </Box>
-    </Container>
+          <FileTree />
+        </Container>
+      </UploadErrorContextProvider>
+    </ZipFileListProvider>
   );
 }
